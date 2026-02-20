@@ -91,7 +91,7 @@ class TransactionsScreen extends ConsumerWidget {
             child: ListView.separated(
               padding: const EdgeInsets.all(16),
               itemCount: response.transactions.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 8),
+              separatorBuilder: (_, _) => const SizedBox(height: 8),
               itemBuilder:
                   (ctx, i) => _TransactionCard(tx: response.transactions[i]),
             ),
@@ -185,7 +185,7 @@ class _TransactionCard extends StatelessWidget {
             ),
           ),
           Text(
-            '${_sign}${CurrencyFormatter.format(tx.amount, symbol: tx.accountFrom?.currencySymbol ?? '\$')}',
+            '$_sign${CurrencyFormatter.format(tx.amount, symbol: tx.accountFrom?.currencySymbol ?? '\$')}',
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w700,

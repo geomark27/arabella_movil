@@ -11,12 +11,14 @@ class LoginRequest {
 
 class RegisterRequest {
   final String email;
+  final String userName;
   final String password;
   final String firstName;
   final String lastName;
 
   const RegisterRequest({
     required this.email,
+    required this.userName,
     required this.password,
     required this.firstName,
     required this.lastName,
@@ -24,6 +26,7 @@ class RegisterRequest {
 
   Map<String, dynamic> toJson() => {
     'email': email,
+    'user_name': userName,
     'password': password,
     'first_name': firstName,
     'last_name': lastName,
@@ -58,12 +61,14 @@ class ChangePasswordRequest {
 class AuthUser {
   final int id;
   final String email;
+  final String userName;
   final String firstName;
   final String lastName;
   final bool isActive;
 
   const AuthUser({
     required this.id,
+    required this.userName,
     required this.email,
     required this.firstName,
     required this.lastName,
@@ -73,6 +78,7 @@ class AuthUser {
   factory AuthUser.fromJson(Map<String, dynamic> json) => AuthUser(
     id: json['id'] as int,
     email: json['email'] as String,
+    userName: json['user_name'] as String,
     firstName: json['first_name'] as String,
     lastName: json['last_name'] as String,
     isActive: json['is_active'] as bool? ?? true,

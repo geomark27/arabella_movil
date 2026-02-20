@@ -68,6 +68,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   Future<bool> register({
     required String email,
+    required String userName,
     required String password,
     required String firstName,
     required String lastName,
@@ -76,6 +77,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     try {
       final auth = await _repo.register(
         RegisterRequest(
+          userName: userName.trim(),
           email: email.trim(),
           password: password,
           firstName: firstName.trim(),

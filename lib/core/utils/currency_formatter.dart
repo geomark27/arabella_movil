@@ -6,7 +6,7 @@ class CurrencyFormatter {
   static String format(String? amount, {String symbol = '\$'}) {
     if (amount == null || amount.isEmpty) return '$symbol 0.00';
     final value = double.tryParse(amount) ?? 0.0;
-    return '${symbol} ${NumberFormat('#,##0.00', 'en_US').format(value)}';
+    return '$symbol ${NumberFormat('#,##0.00', 'en_US').format(value)}';
   }
 
   static String formatDouble(double amount, {String symbol = '\$'}) {

@@ -78,7 +78,7 @@ class _CategoryList extends StatelessWidget {
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: categories.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 6),
+      separatorBuilder: (_, _) => const SizedBox(height: 6),
       itemBuilder: (ctx, i) {
         final c = categories[i];
         final isExpense = c.type == 'EXPENSE';

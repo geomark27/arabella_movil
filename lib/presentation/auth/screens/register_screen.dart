@@ -16,6 +16,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
+  final _userNameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   bool _obscurePassword = true;
@@ -26,6 +27,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     _firstNameController.dispose();
     _lastNameController.dispose();
     _emailController.dispose();
+    _userNameController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
@@ -36,6 +38,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     final success = await ref
         .read(authProvider.notifier)
         .register(
+          userName: _userNameController.text,
           email: _emailController.text,
           password: _passwordController.text,
           firstName: _firstNameController.text,
@@ -92,10 +95,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         controller: _firstNameController,
                         textCapitalization: TextCapitalization.words,
                         textInputAction: TextInputAction.next,
-                        decoration: const InputDecoration(
-                          labelText: 'Nombre',
-                          prefixIcon: Icon(Icons.person_outline),
-                        ),
+                        decoration: const InputDecoration(labelText: 'Nombre'),
                         validator: (v) {
                           if (v == null || v.trim().isEmpty) {
                             return 'Requerido';
@@ -125,6 +125,23 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 ),
                 const SizedBox(height: 16),
 
+                // ── UserName ─────────────────────────────────────────────
+                TextFormField(
+                  controller: _userNameController,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
+                  autocorrect: false,
+                  decoration: const InputDecoration(
+                    labelText: 'Nombre de usuario',
+                    prefixIcon: Icon(Icons.person_outline),
+                  ),
+                  validator: (v) {
+                    if (v == null || v.isEmpty)
+                      return 'Ingresa tu nombre de usuario';
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
                 // ── Email ─────────────────────────────────────────────
                 TextFormField(
                   controller: _emailController,
@@ -132,7 +149,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   textInputAction: TextInputAction.next,
                   autocorrect: false,
                   decoration: const InputDecoration(
-                    labelText: 'Correo electrónico',
+                    labelText: 'Email',
                     prefixIcon: Icon(Icons.email_outlined),
                   ),
                   validator: (v) {

@@ -8,9 +8,12 @@ import '../presentation/auth/screens/change_password_screen.dart';
 import '../presentation/home/screens/home_screen.dart';
 import '../presentation/dashboard/screens/dashboard_screen.dart';
 import '../presentation/accounts/screens/accounts_screen.dart';
+import '../presentation/accounts/screens/account_form_screen.dart';
+import '../presentation/accounts/screens/account_detail_screen.dart';
 import '../presentation/transactions/screens/transactions_screen.dart';
 import '../presentation/categories/screens/categories_screen.dart';
 import '../presentation/profile/screens/profile_screen.dart';
+import '../data/models/account/account_model.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -45,6 +48,30 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/change-password',
         builder: (context, state) => const ChangePasswordScreen(),
+      ),
+
+      // ── Accounts (full-screen, sin shell) ─────────────────────────
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        path: '/accounts/new',
+        builder: (context, state) => const AccountFormScreen(),
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        path: '/accounts/:id',
+        builder: (context, state) {
+          final account = state.extra as AccountModel?;
+          final id = int.tryParse(state.pathParameters['id'] ?? '') ?? 0;
+          return AccountDetailScreen(accountId: id, account: account);
+        },
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        path: '/accounts/:id/edit',
+        builder: (context, state) {
+          final account = state.extra as AccountModel?;
+          return AccountFormScreen(account: account);
+        },
       ),
 
       // ── App shell (Bottom Navigation) ─────────────────────────────

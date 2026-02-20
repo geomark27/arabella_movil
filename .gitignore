@@ -1,3 +1,7 @@
+# Environment / API config files
+.env
+!.env.example
+
 # Miscellaneous
 *.class
 *.log
