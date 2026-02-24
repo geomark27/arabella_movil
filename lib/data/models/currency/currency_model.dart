@@ -16,8 +16,8 @@ class CurrencyModel {
   factory CurrencyModel.fromJson(Map<String, dynamic> json) => CurrencyModel(
     id: json['id'] as int,
     code: json['code'] as String,
-    name: json['name'] as String,
-    symbol: json['symbol'] as String,
+    name: json['name'] as String? ?? '',
+    symbol: json['symbol'] as String? ?? '',
     isActive: json['is_active'] as bool? ?? true,
   );
 }

@@ -181,7 +181,7 @@ class AccountDetailScreen extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: Icon(
-                    _iconFor(current.accountType),
+                    _iconFor(current.accountTypeLabel),
                     color: AppTheme.primary,
                     size: 32,
                   ),
@@ -197,7 +197,7 @@ class AccountDetailScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  _labelFor(current.accountType),
+                  _labelFor(current.accountTypeLabel),
                   style: const TextStyle(
                     fontSize: 14,
                     color: AppTheme.onSurfaceMuted,
@@ -246,7 +246,7 @@ class AccountDetailScreen extends ConsumerWidget {
                 _InfoRow(
                   icon: Icons.category_outlined,
                   label: 'Tipo',
-                  value: _labelFor(current.accountType),
+                  value: _labelFor(current.accountTypeLabel),
                 ),
                 _Divider(),
                 _InfoRow(

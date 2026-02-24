@@ -229,7 +229,7 @@ class _AccountCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    '${account.accountType.replaceAll('_', ' ')} · ${account.currencyCode}',
+                    '${account.accountTypeLabel.replaceAll('_', ' ')} · ${account.currencyCode}',
                     style: const TextStyle(
                       fontSize: 12,
                       color: AppTheme.onSurfaceMuted,

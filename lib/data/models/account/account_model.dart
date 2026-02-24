@@ -4,6 +4,7 @@ class AccountModel {
   final int id;
   final String name;
   final String accountType;
+  final String accountTypeLabel;
   final String balance;
   final int currencyId;
   final CurrencyModel? currency;
@@ -15,6 +16,7 @@ class AccountModel {
     required this.id,
     required this.name,
     required this.accountType,
+    required this.accountTypeLabel,
     required this.balance,
     required this.currencyId,
     this.currency,
@@ -24,18 +26,19 @@ class AccountModel {
   });
 
   factory AccountModel.fromJson(Map<String, dynamic> json) => AccountModel(
-    id: json['id'] as int,
-    name: json['name'] as String,
-    accountType: json['account_type'] as String,
-    balance: json['balance']?.toString() ?? '0',
-    currencyId: json['currency_id'] as int,
+    id:               json['id'] as int,
+    name:             json['name'] as String,
+    accountType:      json['account_type'] as String,
+    accountTypeLabel: json['account_type_label'] as String,
+    balance:          json['balance']?.toString() ?? '0',
+    currencyId:       json['currency_id'] as int,
     currency:
         json['currency'] != null
             ? CurrencyModel.fromJson(json['currency'] as Map<String, dynamic>)
             : null,
-    isActive: json['is_active'] as bool? ?? true,
-    createdAt: json['created_at'] as String?,
-    updatedAt: json['updated_at'] as String?,
+    isActive:   json['is_active'] as bool? ?? true,
+    createdAt:  json['created_at'] as String?,
+    updatedAt:  json['updated_at'] as String?,
   );
 
   String get currencySymbol => currency?.symbol ?? '\$';
@@ -62,9 +65,9 @@ class CreateAccountRequest {
   });
 
   Map<String, dynamic> toJson() => {
-    'name': name,
+    'name':         name,
     'account_type': accountType,
-    'currency_id': currencyId,
+    'currency_id':  currencyId,
     if (balance != null) 'balance': balance,
     if (isActive != null) 'is_active': isActive,
   };
