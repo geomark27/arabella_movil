@@ -1,9 +1,24 @@
 # 📱 Arabella Mobile — Sprint Planning
 
-**Proyecto:** arabella_movil  
-**Stack:** Flutter · Riverpod · GoRouter · Dio · flutter_dotenv  
-**Backend:** arabella-api (Go · Gin · PostgreSQL)  
-**Última actualización:** Febrero 2026  
+**Proyecto:** arabella_movil
+**Stack:** Flutter · Riverpod · GoRouter · Dio · flutter_dotenv
+**Backend:** arabella-api (Go · Gin · PostgreSQL)
+**Última actualización:** Marzo 2026
+
+---
+
+## 🎯 Ruta al MVP
+
+El cuello de botella del MVP son las **transacciones**. Sin poder crear, editar y eliminar transacciones, el usuario no puede operar y el Runway no tiene datos reales. El orden de ejecución para llegar a MVP funcional es:
+
+| Prioridad | Sprint | Alcance MVP |
+|---|---|---|
+| 1 | Sprint 4 | Transacciones CRUD completo (desbloquea todo) |
+| 2 | Sprint 5 | Categorías CRUD completo (necesario para el form de transacciones) |
+| 3 | Sprint 6 | **Solo** editar perfil básico — el resto espera |
+| 4 | Sprint 7 | **Solo** snackbars y loading states — sin animaciones |
+| Post-MVP | Sprint 8 | Features avanzados (búsqueda, filtros, paginación, gráficas) |
+| Post-MVP | Sprint 9 | Testing |
 
 ---
 
@@ -152,34 +167,45 @@ lib/
 
 ---
 
-## ⏳ Sprint 6 — Perfil y Configuración
+## ⏳ Sprint 6 — Perfil (parcial MVP)
 > Estado: **PENDIENTE**
 
+### MVP
 | Tarea | Estado |
 |---|---|
 | Vista básica de perfil + logout | ✅ |
 | Editar perfil (nombre, email, username) | ❌ |
+
+### Post-MVP
+| Tarea | Estado |
+|---|---|
 | Pantalla de monedas disponibles | ❌ |
 | Foto / avatar de usuario | ❌ |
 
 ---
 
-## ⏳ Sprint 7 — UX & Polish
+## ⏳ Sprint 7 — UX & Polish (selectivo MVP)
 > Estado: **PENDIENTE**
 
+### MVP — mínimo indispensable
 | Tarea | Estado |
 |---|---|
-| Mensajes de error amigables al usuario | ❌ |
 | Snackbars de éxito / error en CRUD | ❌ |
-| Loading skeletons en listas | ❌ |
+| Loading states en operaciones async | ❌ |
 | Validaciones de formulario consistentes | ❌ |
+| Mensajes de error amigables al usuario | ❌ |
+
+### Post-MVP
+| Tarea | Estado |
+|---|---|
+| Loading skeletons en listas | ❌ |
 | ConfirmDialog reutilizable | ❌ |
 | Pantalla de error genérica (red / 500) | ❌ |
 | Animaciones de transición | ❌ |
 
 ---
 
-## ⏳ Sprint 8 — Features Avanzados
+## ⏳ Sprint 8 — Features Avanzados (Post-MVP)
 > Estado: **PENDIENTE**
 
 | Feature | Estado |
@@ -194,7 +220,7 @@ lib/
 
 ---
 
-## ⏳ Sprint 9 — Testing
+## ⏳ Sprint 9 — Testing (Post-MVP)
 > Estado: **PENDIENTE**
 
 | Tipo | Estado |
@@ -236,21 +262,22 @@ lib/
 
 ## 📊 Progreso General
 
-| Sprint | Descripción | Estado | % |
-|---|---|---|---|
-| Sprint 0 | Infraestructura | ✅ Completo | 100% |
-| Sprint 1 | Autenticación | ✅ Completo | 100% |
-| Sprint 2 | Dashboard | ✅ Completo | 100% |
-| Sprint 3 | Cuentas CRUD | ✅ Completo | 100% |
-| Sprint 4 | Transacciones CRUD | 🔄 En progreso | 10% |
-| Sprint 5 | Categorías CRUD | 🔄 En progreso | 15% |
-| Sprint 6 | Perfil & Config | ⏳ Pendiente | 20% |
-| Sprint 7 | UX & Polish | ⏳ Pendiente | 0% |
-| Sprint 8 | Features Avanzados | ⏳ Pendiente | 0% |
-| Sprint 9 | Testing | ⏳ Pendiente | 0% |
+| Sprint | Descripción | MVP | Estado | % |
+|---|---|---|---|---|
+| Sprint 0 | Infraestructura | ✅ MVP | ✅ Completo | 100% |
+| Sprint 1 | Autenticación | ✅ MVP | ✅ Completo | 100% |
+| Sprint 2 | Dashboard | ✅ MVP | ✅ Completo | 100% |
+| Sprint 3 | Cuentas CRUD | ✅ MVP | ✅ Completo | 100% |
+| Sprint 4 | Transacciones CRUD | ✅ MVP | 🔄 En progreso | 10% |
+| Sprint 5 | Categorías CRUD | ✅ MVP | 🔄 En progreso | 15% |
+| Sprint 6 | Perfil (parcial) | ⚡ Parcial | ⏳ Pendiente | 20% |
+| Sprint 7 | UX & Polish (selectivo) | ⚡ Parcial | ⏳ Pendiente | 0% |
+| Sprint 8 | Features Avanzados | 🚫 Post-MVP | ⏳ Pendiente | 0% |
+| Sprint 9 | Testing | 🚫 Post-MVP | ⏳ Pendiente | 0% |
 
 **Progreso total estimado: ~50%**
+**Progreso hacia MVP (Sprints 0–7 parcial): ~55%**
 
 ---
 
-*Mantenido por: Marcos Ramos*
+*Mantenido por: Marcos Ramos — Última revisión: Marzo 2026*
