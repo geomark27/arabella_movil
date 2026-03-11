@@ -303,10 +303,20 @@ class _EmptyState extends StatelessWidget {
             style: TextStyle(fontSize: 14, color: AppTheme.onSurfaceMuted),
           ),
           const SizedBox(height: 24),
-          ElevatedButton.icon(
+          FilledButton.icon(
             onPressed: onAdd,
-            icon: const Icon(Icons.add_rounded),
-            label: const Text('Nueva transacción'),
+            style: FilledButton.styleFrom(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 28, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
+            ),
+            icon: const Icon(Icons.add_rounded, size: 18),
+            label: const Text(
+              'Nueva transacción',
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            ),
           ),
         ],
       ),

@@ -24,6 +24,7 @@ class ApiConstants {
   static const String login = '/auth/login';
   static const String refresh = '/auth/refresh';
   static const String changePassword = '/auth/change-password';
+  static const String me = '/auth/me';
 
   // Users
   static const String users = '/users';

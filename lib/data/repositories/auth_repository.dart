@@ -46,6 +46,13 @@ class AuthRepository {
     await _dio.put(ApiConstants.changePassword, data: request.toJson());
   }
 
+  /// Obtiene el usuario autenticado desde el servidor usando el token JWT.
+  /// Lanza DioException si el token es inválido o expiró (401).
+  Future<AuthUser> getMe() async {
+    final response = await _dio.get(ApiConstants.me);
+    return AuthUser.fromJson(response.data['data'] as Map<String, dynamic>);
+  }
+
   Future<void> logout() async {
     await StorageService.clearAll();
   }

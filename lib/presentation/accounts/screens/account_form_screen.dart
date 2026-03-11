@@ -238,7 +238,7 @@ class _AccountFormScreenState extends ConsumerState<AccountFormScreen> {
                                     const SizedBox(width: 8),
                                     Expanded(
                                       child: Text(
-                                        c.name,
+                                        c.name ?? c.code,
                                         style: const TextStyle(fontSize: 13),
                                         overflow: TextOverflow.ellipsis,
                                       ),

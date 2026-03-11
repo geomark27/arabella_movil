@@ -14,6 +14,7 @@ import '../presentation/transactions/screens/transactions_screen.dart';
 import '../presentation/transactions/screens/transaction_form_screen.dart';
 import '../presentation/categories/screens/categories_screen.dart';
 import '../presentation/profile/screens/profile_screen.dart';
+import '../presentation/splash/splash_screen.dart';
 import '../data/models/account/account_model.dart';
 import '../data/models/transaction/transaction_model.dart';
 
@@ -23,23 +24,29 @@ final _shellNavigatorKey = GlobalKey<NavigatorState>();
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: '/dashboard',
+    initialLocation: '/',
     redirect: (context, state) async {
       final authState = ref.read(authProvider);
+      final path = state.uri.path;
 
-      if (authState.status == AuthStatus.initial) return null;
+      // Mientras inicializa, mantener en splash
+      if (authState.status == AuthStatus.initial) {
+        return path == '/' ? null : '/';
+      }
 
       final isAuthenticated = authState.isAuthenticated;
-      final isAuthRoute =
-          state.uri.path == '/login' || state.uri.path == '/register';
+      final isAuthRoute = path == '/login' || path == '/register';
 
       if (!isAuthenticated && !isAuthRoute) return '/login';
-      if (isAuthenticated && isAuthRoute) return '/dashboard';
+      if (isAuthenticated && (isAuthRoute || path == '/')) return '/dashboard';
 
       return null;
     },
     refreshListenable: _AuthStateListenable(ref),
     routes: [
+      // ── Splash ────────────────────────────────────────────────────
+      GoRoute(path: '/', builder: (context, state) => const SplashScreen()),
+
       // ── Auth routes ────────────────────────────────────────────────
       GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
       GoRoute(

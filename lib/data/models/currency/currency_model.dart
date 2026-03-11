@@ -1,14 +1,14 @@
 class CurrencyModel {
   final int id;
   final String code;
-  final String name;
+  final String? name;
   final String symbol;
   final bool isActive;
 
   const CurrencyModel({
     required this.id,
     required this.code,
-    required this.name,
+    this.name,
     required this.symbol,
     required this.isActive,
   });

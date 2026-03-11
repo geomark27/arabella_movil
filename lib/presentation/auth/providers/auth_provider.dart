@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../data/models/auth/auth_models.dart';
 import '../../../data/repositories/auth_repository.dart';
@@ -44,9 +45,22 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   Future<void> _init() async {
     final loggedIn = await _repo.isLoggedIn();
-    state = state.copyWith(
-      status: loggedIn ? AuthStatus.authenticated : AuthStatus.unauthenticated,
-    );
+    if (!loggedIn) {
+      state = state.copyWith(status: AuthStatus.unauthenticated);
+      return;
+    }
+    try {
+      final user = await _repo.getMe();
+      state = state.copyWith(status: AuthStatus.authenticated, user: user);
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401) {
+        await _repo.logout();
+        state = state.copyWith(status: AuthStatus.unauthenticated);
+      } else {
+        // Error de red u otro — mantenemos sesión sin datos de usuario
+        state = state.copyWith(status: AuthStatus.authenticated);
+      }
+    }
   }
 
   Future<bool> login({required String email, required String password}) async {

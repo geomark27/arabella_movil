@@ -115,13 +115,13 @@ class TransactionListResponse {
   factory TransactionListResponse.fromJson(Map<String, dynamic> json) =>
       TransactionListResponse(
         transactions:
-            (json['transactions'] as List<dynamic>?)
+            (json['data'] as List<dynamic>?)
                 ?.map(
                   (e) => TransactionModel.fromJson(e as Map<String, dynamic>),
                 )
                 .toList() ??
             [],
-        total: json['total'] as int? ?? 0,
+        total: json['count'] as int? ?? 0,
         page: json['page'] as int? ?? 1,
         pageSize: json['page_size'] as int? ?? 20,
         totalPages: json['total_pages'] as int? ?? 1,
@@ -166,23 +166,35 @@ class CreateTransactionRequest {
 
 class UpdateTransactionRequest {
   final String? description;
+  final String? amount;
   final String? notes;
   final String? transactionDate;
   final bool? isReconciled;
+  final int? accountFromId;
+  final int? categoryId;
+  final String? exchangeRate;
 
   const UpdateTransactionRequest({
     this.description,
+    this.amount,
     this.notes,
     this.transactionDate,
     this.isReconciled,
+    this.accountFromId,
+    this.categoryId,
+    this.exchangeRate,
   });
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     if (description != null) map['description'] = description;
+    if (amount != null) map['amount'] = amount;
     if (notes != null) map['notes'] = notes;
     if (transactionDate != null) map['transaction_date'] = transactionDate;
     if (isReconciled != null) map['is_reconciled'] = isReconciled;
+    if (accountFromId != null) map['account_from_id'] = accountFromId;
+    if (categoryId != null) map['category_id'] = categoryId;
+    if (exchangeRate != null) map['exchange_rate'] = exchangeRate;
     return map;
   }
 }

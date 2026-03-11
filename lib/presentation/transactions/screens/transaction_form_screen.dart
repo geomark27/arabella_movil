@@ -136,6 +136,10 @@ class _TransactionFormScreenState
       _showSnack('Selecciona una cuenta de destino', isError: true);
       return;
     }
+    if (_needsCategory && _selectedCategoryId == null) {
+      _showSnack('Selecciona una categoría', isError: true);
+      return;
+    }
     if (_selectedAccountToId != null &&
         _selectedAccountFromId == _selectedAccountToId) {
       _showSnack('Las cuentas de origen y destino deben ser distintas',
@@ -156,10 +160,14 @@ class _TransactionFormScreenState
           widget.transaction!.id,
           UpdateTransactionRequest(
             description: _descriptionController.text.trim(),
+            amount: _amountController.text.trim(),
             notes: _notesController.text.trim().isEmpty
                 ? null
                 : _notesController.text.trim(),
             transactionDate: dateIso,
+            accountFromId: _selectedAccountFromId,
+            categoryId: _needsCategory ? _selectedCategoryId : null,
+            exchangeRate: exchangeRate == '1' ? null : exchangeRate,
           ),
         );
       } else {
@@ -306,8 +314,8 @@ class _TransactionFormScreenState
               const SizedBox(height: 24),
             ],
 
-            // ── Monto (solo en creación) ───────────────────────────────────
-            if (!_isEditing) ...[
+            // ── Monto ─────────────────────────────────────────────────────
+            ...[
               TextFormField(
                 controller: _amountController,
                 keyboardType:
@@ -439,8 +447,8 @@ class _TransactionFormScreenState
             ],
 
             // ── Categoría (INCOME / EXPENSE) ──────────────────────────────
-            if (_needsCategory && !_isEditing) ...[
-              const _SectionLabel(label: 'Categoría (opcional)'),
+            if (_needsCategory) ...[
+              const _SectionLabel(label: 'Categoría'),
               const SizedBox(height: 10),
               Consumer(
                 builder: (context, ref, _) {
@@ -475,8 +483,8 @@ class _TransactionFormScreenState
               const SizedBox(height: 16),
             ],
 
-            // ── Tasa de cambio (solo en creación, opcional) ───────────────
-            if (!_isEditing) ...[
+            // ── Tasa de cambio (opcional) ─────────────────────────────────
+            ...[
               TextFormField(
                 controller: _exchangeRateController,
                 keyboardType:
@@ -504,30 +512,41 @@ class _TransactionFormScreenState
             const SizedBox(height: 32),
 
             // ── Botón submit ──────────────────────────────────────────────
-            SizedBox(
-              width: double.infinity,
-              height: 52,
-              child: ElevatedButton(
+            Center(
+              child: FilledButton.icon(
                 onPressed: _isSubmitting ? null : _submit,
-                style: ElevatedButton.styleFrom(
+                style: FilledButton.styleFrom(
                   backgroundColor: _isEditing
                       ? AppTheme.primary
                       : _colorForType(_selectedType),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 36, vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
                 ),
-                child: _isSubmitting
+                icon: _isSubmitting
                     ? const SizedBox(
-                        height: 22,
-                        width: 22,
+                        height: 18,
+                        width: 18,
                         child: CircularProgressIndicator(
                           color: Colors.white,
-                          strokeWidth: 2.5,
+                          strokeWidth: 2,
                         ),
                       )
-                    : Text(
+                    : Icon(
                         _isEditing
-                            ? 'Guardar cambios'
-                            : 'Registrar ${_labelForType(_selectedType).toLowerCase()}',
+                            ? Icons.check_rounded
+                            : _iconForType(_selectedType),
+                        size: 18,
                       ),
+                label: Text(
+                  _isEditing
+                      ? 'Guardar cambios'
+                      : 'Registrar ${_labelForType(_selectedType).toLowerCase()}',
+                  style: const TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.w600),
+                ),
               ),
             ),
           ],
@@ -598,17 +617,12 @@ class _TransactionFormScreenState
       child: DropdownButtonHideUnderline(
         child: DropdownButton<int>(
           value: _selectedCategoryId,
-          hint: const Text('Sin categoría',
+          hint: const Text('Selecciona una categoría',
               style: TextStyle(color: AppTheme.onSurfaceMuted)),
           isExpanded: true,
           dropdownColor: AppTheme.surface,
           style: const TextStyle(color: AppTheme.onSurface, fontSize: 15),
           items: [
-            const DropdownMenuItem<int>(
-              value: null,
-              child: Text('Sin categoría',
-                  style: TextStyle(color: AppTheme.onSurfaceMuted)),
-            ),
             ...cats.map(
               (c) => DropdownMenuItem(
                 value: c.id,

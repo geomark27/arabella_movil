@@ -6,8 +6,38 @@ final categoryRepositoryProvider = Provider<CategoryRepository>((ref) {
   return CategoryRepository();
 });
 
-final categoriesProvider = FutureProvider.autoDispose<List<CategoryModel>>((
-  ref,
-) async {
-  return ref.read(categoryRepositoryProvider).getCategories();
-});
+class CategoriesNotifier extends AsyncNotifier<List<CategoryModel>> {
+  @override
+  Future<List<CategoryModel>> build() async {
+    return ref.read(categoryRepositoryProvider).getCategories();
+  }
+
+  Future<void> create(CreateCategoryRequest request) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      await ref.read(categoryRepositoryProvider).createCategory(request);
+      return ref.read(categoryRepositoryProvider).getCategories();
+    });
+  }
+
+  Future<void> edit(int id, UpdateCategoryRequest request) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      await ref.read(categoryRepositoryProvider).updateCategory(id, request);
+      return ref.read(categoryRepositoryProvider).getCategories();
+    });
+  }
+
+  Future<void> delete(int id) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      await ref.read(categoryRepositoryProvider).deleteCategory(id);
+      return ref.read(categoryRepositoryProvider).getCategories();
+    });
+  }
+}
+
+final categoriesProvider =
+    AsyncNotifierProvider<CategoriesNotifier, List<CategoryModel>>(
+      CategoriesNotifier.new,
+    );

@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la \"C:\\\\Users\\\\Marcos\\\\flutter-dev\\\\arabella_movil\\\\lib\\\\data\\\\models\\\\account\"\" 2>/dev/null || find \"C:/Users/Marcos/flutter-dev/arabella_movil/lib/data/models/account/ \" -type f)"
+    ]
+  }
+}
